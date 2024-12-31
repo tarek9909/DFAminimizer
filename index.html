@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
+  <title>Dfa Minimizer</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="#" id="eq">Equivalence</a>
+            </li>
+            <li>
+                <a href="#" id="min">Minimization</a>
+            </li>
+        </ul>
+    </nav>
+    <section id="first">
+        <h3>DFA Equivalence Checker & Dynamic DFA Visualization</h3>
+        <div class="flex">
+            <div class="container">
+                <form id="contact" action="" method="post">
+                    <h2>DFA 1</h2>
+    
+                    <fieldset>
+                        <label for="states1">States (comma-separated):</label>
+                        <input type="text" id="states1" placeholder="q0, q1" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="alphabet1">Alphabet (comma-separated):</label>
+                        <input type="text" id="alphabet1" placeholder="0, 1" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="initialState1">Initial State:</label>
+                        <input type="text" id="initialState1" placeholder="q0" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="acceptingStates1">Accepting States (comma-separated):</label>
+                        <input type="text" id="acceptingStates1" placeholder="q0" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="transitionFunction1">Transition Function:</label>
+                        <table id="transitionTable1">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <!-- Dynamic column headers based on the alphabet -->
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </fieldset>
+    
+                </form>
+    
+    
+            </div>
+            <div class="container">
+                <form id="contact" action="" method="post">
+    
+                    <h2>DFA 2</h2>
+                    <fieldset>
+                        <label for="states2">States (comma-separated):</label>
+                        <input type="text" id="states2" placeholder="q0, q1" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="alphabet2">Alphabet (comma-separated):</label>
+                        <input type="text" id="alphabet2" placeholder="0, 1" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="initialState2">Initial State:</label>
+                        <input type="text" id="initialState2" placeholder="q0" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="acceptingStates2">Accepting States (comma-separated):</label>
+                        <input type="text" id="acceptingStates2" placeholder="q0" required>
+                    </fieldset>
+    
+                    <fieldset>
+                        <label for="transitionFunction2">Transition Function:</label>
+                        <table id="transitionTable2">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <!-- Dynamic column headers based on the alphabet -->
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </fieldset>
+                </form>
+    
+    
+            </div>
+        </div>
+        <div class="btn">
+            <button type="button" onclick="renderDFA()" id=" check-btn">Visualize DFA</button>
+        </div>
+        <div class="alert">
+            <h3 id="alert"></h3>
+        </div>
+        <div class="graphs">
+            <div id="graph1"></div>
+            <div id="graph2"></div>
+        </div>
+        <div class="btn">
+    
+            <button type="button" onclick="checkEquivalence()" id="check-btn" style="display:none;">Check
+                Equivalence</button>
+        </div>
+    
+    </section>
+    <section id="second2" style="display: none;">
+        <div class="container">
+            <form id="contact" action="" method="post">
+                <h1>Enter your DFA</h1>
+                <form id="dfaForm">
+                    <h2>DFA</h2>
+                    <fieldset>
+                        <label for="states3">States (comma-separated):</label>
+                        <input type="text" id="states3" placeholder="q0, q1" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="alphabet3">Alphabet (comma-separated):</label>
+                        <input type="text" id="alphabet3" placeholder="0, 1" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="initialState3">Initial State:</label>
+                        <input type="text" id="initialState3" placeholder="q0" required>
+                    </fieldset>
+                    <fieldset>
+                        <label for="acceptingStates3">Accepting States (comma-separated):</label>
+                        <input type="text" id="acceptingStates3" placeholder="q0" required>
+                    </fieldset>
+        
+                    <fieldset>
+                        <label for="transitionFunction3">Transition Function:</label>
+                        <table style="width: 100%;" id="transitionTable3">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <!-- Dynamic column headers based on the alphabet -->
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </fieldset>
+                </form>
+        
+                <div class="btn">
+                    <button type="button" id="m">Minimize DFA</button>
+                </div>
+            </form>
+        </div>
+        <div class="alert">
+            <h3 id="alert1"></h3>
+        </div>
+        
+        <div class="graphs">
+            <div id="graph3"></div>
+        </div>
+        
+        
+        <div id="dfaDetails" style="color: black; font-size: 40px;"></div>
+        
+        <!-- Add this div in your HTML file where you want the output to be displayed -->
+        <div id="output"></div>
+        <fieldset id="string" style="display: none;">
+            <h3 id="generatedinput"></h3>
+            <div class="in">
+                <label id="inputf" for="inputField">Enter Your string:</label>
+                <input type="text" id="inputField" oninput="checkInput()">
+        
+                <div id="resultContainer"></div>
+            </div>
+        </fieldset>
+        <div id="r">
+        
+        </div>
+    </section>
+    <script src="./js/hopcroft.js"></script>
+    <script src="./js/eq.js"></script> 
+    <script src="./js/script.js"></script>
+  <script>
+   function loadLibrary(libraryType) {
+    // Remove any existing script elements to avoid conflicts
+    var existingScript = document.getElementById("visualization-library");
+    if (existingScript) {
+        existingScript.parentNode.removeChild(existingScript);
+    }
+
+    // Create the first script element
+    var script1 = document.createElement("script");
+    script1.id = "visualization-library";
+    script1.type = "text/javascript";
+
+    // Create the second script element
+    var script2 = document.createElement("script");
+    script2.id = "visualization-library-lite";
+    script2.type = "text/javascript";
+
+    // Set the source of the scripts based on the selected library type
+    if (libraryType === 'viz') {
+        script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js'; // Replace with the actual path
+        script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js'; // Replace with the actual path
+    } else if (libraryType === 'viz-lite') {
+        script1.src = './js/viz-lite.js'; // Replace with the actual path
+    }
+
+    // Append the scripts to the document body
+    document.body.appendChild(script1);
+
+    // If 'viz' is selected, append the second script
+    if (libraryType === 'viz') {
+        document.body.appendChild(script2);
+    }
+}
+
+  </script>
+
+</body>
+
+</html>
